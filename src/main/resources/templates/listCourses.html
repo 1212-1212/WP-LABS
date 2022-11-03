@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Welcome and Choose a Course</title>
+    <link href="/listCourses.css">
+</head>
+<body>
+<header>
+    <h1>Courses List</h1>
+    <ul>
+        <li th:each="course:${courses}">
+            <th:block th:text="${course.name}"/>
+            (
+            <th:block th:text="${course.courseId}"/>
+            )
+        </li>
+    </ul>
+</header>
+<main>
+    <h2>Choose course:</h2>
+    <form th:action="@{/listCourses}" th:method="POST">
+        <th:block th:each="course:${courses}">
+            <label th:for="courseId" th:text="${course.name}"></label><input type="radio" th:id="${course.courseId}"
+                                                                             name="courseId"
+                                                                             th:value="${course.courseId}"><br>
+        </th:block>
+
+
+        <input type="submit" value="Submit">
+    </form>
+</main>
+</body>
+</html>

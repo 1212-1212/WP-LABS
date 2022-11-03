@@ -1,0 +1,30 @@
+
+body {
+    width: 800px;
+    margin: auto;
+}
+
+table {
+    width: 100%;
+}
+
+table, td, th {
+    border: 1px solid black;
+    padding: 3px 2px;
+}
+
+section {
+    float: left;
+    margin: 0 1.5%;
+    width: 63%;
+}
+
+aside {
+    float: right;
+    margin: 0 1.5%;
+    width: 30%;
+}
+#error
+{
+    color: red;
+}
