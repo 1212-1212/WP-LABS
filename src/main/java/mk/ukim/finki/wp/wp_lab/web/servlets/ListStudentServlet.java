@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name="listStudentServlet", urlPatterns = {"/listStudents", "/listStudents.html"})
 public class ListStudentServlet extends HttpServlet {
@@ -34,10 +35,10 @@ public class ListStudentServlet extends HttpServlet {
 
         String username = req.getParameter("username");
         req.getSession().setAttribute("username", username);
-        Student student = null;
+        Optional<Student> student = Optional.empty();
         try {
             student  = studentService.findStudentByUsername((String) req.getSession().getAttribute("username"));
-            req.getSession().setAttribute("selectedStudent", student);
+            student.ifPresent(s -> req.getSession().setAttribute("selectedStudent", s));
         } catch (NoStudentSelectedException e) {
             WebContext context = new WebContext(req, resp, req.getServletContext());
             context.setVariable("hasError", true);
@@ -45,7 +46,8 @@ public class ListStudentServlet extends HttpServlet {
             context.setVariable("students", studentService.listAll());
             springTemplateEngine.process("listStudents.html", context, resp.getWriter());
         }
-        if(student != null) {
+        System.out.println(student);
+        if(student.isPresent()) {
             resp.sendRedirect("/studentEnrollmentSummary");
         }
     }

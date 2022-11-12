@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.wp_lab.bootstrap;
 
 import mk.ukim.finki.wp.wp_lab.model.Course;
 import mk.ukim.finki.wp.wp_lab.model.Student;
+import mk.ukim.finki.wp.wp_lab.model.Teacher;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,8 @@ public class DataHolder {
     public static List<Student> students = new ArrayList<>();
     public static List<Course> courses = new ArrayList<>();
 
+    public static List<Teacher> teachers = new ArrayList<>();
+
     @PostConstruct
     public void init() {
         students.add(new Student("petar.petrov", "123", "Petar", "Petrov"));
@@ -22,11 +25,34 @@ public class DataHolder {
         students.add(new Student("gjorgji.gjorgjiev", "123", "Gjorgji", "Gjorgjiev"));
         students.add(new Student("stefan.stefanovski", "123", "Stefan", "Stefanovski"));
         students.add(new Student("filip.filipovski", "123", "Filip", "Filipovski"));
-        courses.add(new Course(1L, "Web programming", "Web programming", createListOfStudents()));
-        courses.add(new Course(2L, "Operating Systems", "Operating Systems", createListOfStudents()));
-        courses.add(new Course(3L, "Electronic and Mobile Commerce", "Electronic and Mobile Commerce", createListOfStudents()));
-        courses.add(new Course(4L, "Computer Networks", "Computer Networks", createListOfStudents()));
-        courses.add(new Course(5L, "Algorithms and Data structures", "Algorithms and Data structures", createListOfStudents()));
+
+
+
+        Teacher teacher = new Teacher("Sasho", "sasho.gramatikov");
+        Course course = new Course("Web programming", "WP", createListOfStudents(), teacher);
+        teachers.add(teacher);
+        courses.add(course);
+
+        teacher = new Teacher("Igor", "igor.mishkovski");
+        course = new Course("Operating Systems", "OS", createListOfStudents(), teacher);
+        teachers.add(teacher);
+        courses.add(course);
+
+        teacher = new Teacher("Goran", "goran.velinov");
+        course = new Course("Database Management Systems", "DBMS", createListOfStudents(), teacher);
+        teachers.add(teacher);
+        courses.add(course);
+
+        teacher = new Teacher("Sonja", "sonja.filipovska");
+        course = new Course("Computer Networks and Security", "CNS", createListOfStudents(), teacher);
+        teachers.add(teacher);
+        courses.add(course);
+
+        teacher = new Teacher("Marija", "marija.mihova");
+        course = new Course("Algorithms and Data structures", "ADS", createListOfStudents(), teacher);
+        teachers.add(teacher);
+        courses.add(course);
+
     }
 
     public List<Student> createListOfStudents() {

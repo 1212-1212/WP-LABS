@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name = "studentEnrollmentSummaryServlet", urlPatterns = {"/studentEnrollmentSummary", "/studentEnrollmentSummary.html"})
 public class StudentEnrollmentSummaryServlet extends HttpServlet {
@@ -33,12 +34,10 @@ public class StudentEnrollmentSummaryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
-        Course course = courseService.findCourseById(Long.valueOf((String) req.getSession().getAttribute("courseId")));
-        req.getSession().setAttribute("selectedCourse", course);
+        Optional<Course> course = courseService.findCourseById(Long.valueOf((String) req.getSession().getAttribute("courseId")));
+        req.getSession().setAttribute("selectedCourse", course.get());
         Student student = (Student) req.getSession().getAttribute("selectedStudent");
-        if (!course.getStudents().contains(student)) {
-            courseService.addStudentInCourse(student.getUsername(), course.getCourseId());
-        }
+        course.ifPresent(value -> courseService.addStudentInCourse(student.getUsername(), value.getCourseId()));
         springTemplateEngine.process("studentEnrollmentSummary.html", webContext, resp.getWriter());
     }
 }

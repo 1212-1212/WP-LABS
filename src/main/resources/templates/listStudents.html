@@ -1,50 +1,50 @@
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Add new Student to Course</title>
-    <link th:href="@{/listStudents.css}">
+  <meta charset="utf-8">
+  <title>Add new Student to Course</title>
+  <link th:href="@{/listStudents.css}">
 </head>
 <body>
 <header>
-    <h1>Student Enrollment - Select the Student </h1>
+  <h1>Student Enrollment - Select the Student </h1>
 </header>
 
 <div th:if="${hasError}">
-    <div th:text="${error}" id="error">
+  <div th:text="${error}" id="error">
 
-    </div>
+  </div>
 </div>
 <section>
 
 
-    <h2>Select the student to enroll:</h2>
-    <a href='/createStudent' type='button'>Create New Student</a>
-    <form th:action="@{/listStudents}" th:method="POST">
-        <th:block th:each="student:${students}">
-            <label th:for="${student.username}" th:text="${student.username}"></label><input type="radio"
-                                                                                             name="username"
-                                                                                             th:id="${student.username}"
-                                                                                             th:value="${student.username}"><br>
-        </th:block>
+  <h2>Select the student to enroll:</h2>
+  <a href='/createStudent' type='button'>Create New Student</a>
+  <form th:action="@{/listStudents}" th:method="POST">
+    <th:block th:each="student:${students}">
+      <label th:for="${student.username}" th:text="${student.username}"></label><input type="radio"
+                                                                                       name="username"
+                                                                                       th:id="${student.username}"
+                                                                                       th:value="${student.username}"><br>
+    </th:block>
 
-        <input type="submit" value="Submit">
-    </form>
+    <input type="submit" value="Submit">
+  </form>
 
 </section>
 
 <aside>
-    <table>
-        <tr>
-            <th colspan="2">
-                Your Enrollment Status
-            </th>
-        </tr>
-        <tr>
-            <td><b>Course Id</b></td>
-            <td th:text="${session.courseId}">
-            </td>
-        </tr>
-    </table>
+  <table>
+    <tr>
+      <th colspan="2">
+        Your Enrollment Status
+      </th>
+    </tr>
+    <tr>
+      <td><b>Course Id</b></td>
+      <td th:text="${session.courseId}">
+      </td>
+    </tr>
+  </table>
 </aside>
 
 

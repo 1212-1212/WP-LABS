@@ -19,7 +19,7 @@
 </header>
 <main>
     <h2>Choose course:</h2>
-    <form th:action="@{/listCourses}" th:method="POST">
+    <form th:action="@{'/listCourses'}" th:method="POST">
         <th:block th:each="course:${courses}">
             <label th:for="courseId" th:text="${course.name}"></label><input type="radio" th:id="${course.courseId}"
                                                                              name="courseId"
@@ -29,6 +29,38 @@
 
         <input type="submit" value="Submit">
     </form>
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Course name</th>
+            <th scope="col">Course description</th>
+            <th scope="col">Course teacher</th>
+            <th scope="col">Course id</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course: ${courses}">
+            <td th:text="${course.getName()}"></td>
+            <td th:text="${course.getDescription()}"></td>
+            <td th:text="${course.getTeacher().getUsername()}"></td>
+            <td th:text="${course.getCourseId()}"></td>
+            <td>
+                <form class="delete" th:method="DELETE" th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
+                    <button type="submit">Delete</button>
+                </form>
+                <button>
+                <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}">Edit</a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/courses/add-form">Add new course</a>
+    </div>
+    <div th:if="${hasError}">
+        <p th:text="'Error: ' + ${error}"></p>
+    </div>
 </main>
 </body>
 </html>

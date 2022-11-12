@@ -7,6 +7,8 @@ import mk.ukim.finki.wp.wp_lab.service.StudentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class StudentServiceImpl implements StudentService {
 
@@ -34,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findStudentByUsername(String username) throws NoStudentSelectedException {
+    public Optional<Student> findStudentByUsername(String username) throws NoStudentSelectedException {
         if(username == null)
             throw new NoStudentSelectedException();
         return studentRepository.findStudentByUsername(username);

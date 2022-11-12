@@ -1,24 +1,24 @@
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>WP lab - Students in Course</title>
-    <link href="/studentEnrollmentSummary.css">
+  <meta charset="utf-8">
+  <title>WP lab - Students in Course</title>
+  <link href="/studentEnrollmentSummary.css">
 </head>
 <body>
 <header>
-    <h1>Students in Course </h1>
+  <h1>Students in Course </h1>
 </header>
 <section>
-    <div th:text="${session.selectedCourse.name}"></div>
-    <ul>
-        <li th:each="student: ${session.selectedCourse.students}">
-            <th:block th:text="${student.name}"></th:block>
-            <th:block th:text="${student.surname}"></th:block>
-            (<th:block th:text="${student.username}"></th:block>)
-        </li>
-    </ul>
+  <div th:text="${session.selectedCourse.name}"></div>
+  <ul>
+    <li th:each="student: ${session.selectedCourse.students}">
+      <th:block th:text="${student.name}"></th:block>
+      <th:block th:text="${student.surname}"></th:block>
+      (<th:block th:text="${student.username}"></th:block>)
+    </li>
+  </ul>
 
-    <a href="/listCourses">Back</a>
+  <a href="/listCourses">Back</a>
 </section>
 </body>
 </html>

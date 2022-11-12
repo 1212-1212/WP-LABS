@@ -5,6 +5,7 @@ import mk.ukim.finki.wp.wp_lab.model.Student;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -25,7 +26,7 @@ public class StudentRepository {
                 .filter(student -> student.getName().contains(text) || student.getSurname().contains(text))
                 .collect(Collectors.toList());
     }
-    public Student findStudentByUsername(String username)
+    public Optional<Student> findStudentByUsername(String username)
     {
         if(username == null || username.isEmpty())
             throw new IllegalArgumentException();
@@ -33,7 +34,7 @@ public class StudentRepository {
         return DataHolder.students
                 .stream()
                 .filter(student -> student.getUsername().equals(username))
-                .findFirst().orElseThrow(NullPointerException::new);
+                .findFirst();
     }
 
     public Student save(String username, String password, String name, String surname)
