@@ -31,7 +31,7 @@ public class CreateStudentServlet extends HttpServlet {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         studentService.save(username, password, name, surname);
-        System.out.println(studentService.listAll());
+        System.out.println(studentService.findAll());
         resp.sendRedirect("/listStudents");
 
     }

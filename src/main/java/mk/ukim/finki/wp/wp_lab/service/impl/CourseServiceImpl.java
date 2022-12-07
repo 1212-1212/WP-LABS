@@ -1,16 +1,19 @@
 package mk.ukim.finki.wp.wp_lab.service.impl;
 
-import mk.ukim.finki.wp.wp_lab.model.Course;
-import mk.ukim.finki.wp.wp_lab.model.Student;
-import mk.ukim.finki.wp.wp_lab.model.Teacher;
+import mk.ukim.finki.wp.wp_lab.model.*;
 import mk.ukim.finki.wp.wp_lab.repository.CourseRepository;
+import mk.ukim.finki.wp.wp_lab.repository.GradeRepository;
 import mk.ukim.finki.wp.wp_lab.repository.StudentRepository;
 import mk.ukim.finki.wp.wp_lab.repository.TeacherRepository;
 import mk.ukim.finki.wp.wp_lab.service.CourseService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -21,61 +24,91 @@ public class CourseServiceImpl implements CourseService {
 
     public final TeacherRepository teacherRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
+    private final GradeRepository gradeRepository;
+
+    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository, GradeRepository gradeRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.gradeRepository = gradeRepository;
     }
 
     @Override
     public List<Student> listStudentsByCourse(Long courseId) {
-        return courseRepository.findAllStudentsByCourse(courseId);
+        return courseRepository.findById(courseId).orElseThrow().getStudents();
     }
 
     @Override
-    public Optional<Course> addStudentInCourse(String username, Long courseId) {
-        Optional<Student> student = studentRepository.findStudentByUsername(username);
-        Optional<Course> course = courseRepository.findById(courseId);
-        if(student.isPresent() && course.isPresent())
-        {
-            course.get().getStudents().add(student.get());
-        }
-        return course;
+    @Transactional
+    public Optional<Course> addStudentInCourse(Student student, Course course) {
+        if(course.getStudents().contains(student))
+            return Optional.empty();
+        course.getStudents().add(student);
+        courseRepository.save(course);
+        return Optional.of(course);
 
     }
 
     @Override
-    public List<Course> listAll() {
-        return courseRepository.findAllCourses();
-    }
 
+    public List<Course> findAll() {
+        return courseRepository.findAll();
+    }
 
 
     @Override
     public Optional<Course> findCourseById(Long id) {
-       return courseRepository.findById(id);
+        return courseRepository.findById(id);
     }
 
     @Override
-    public Optional<Course> save(String courseName, String courseDescription, Long teacherId) {
-        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(IllegalArgumentException::new);
-        courseRepository.save(courseName, courseDescription, teacherId);
-        return Optional.of(new Course(courseName, courseDescription, teacher));
+    public Optional<Course> findCourseByName(String courseName) {
+        return courseRepository.findCourseByName(courseName);
     }
+
+    @Override
+    @Transactional
+
+    public Optional<Course> save(String courseName, String courseDescription, Long teacherId, Type type) {
+        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(IllegalArgumentException::new);
+        Course course = new Course(courseName, courseDescription, type, teacher);
+        courseRepository.save(course);
+        return Optional.of(course);
+    }
+
 
     @Override
     public List<Long> validIdsOfCourses() {
-        return  listAll().stream().mapToLong(Course::getCourseId).boxed().toList();
+        return findAll().stream().mapToLong(Course::getCourseId).boxed().toList();
     }
 
     @Override
     public void deleteCourseById(Long id) {
-        courseRepository.delete(id);
+
+        courseRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void edit(String courseName, String courseDescription, Long teacherId, Type type, Long courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        Optional<Teacher> teacher = teacherRepository.findById(teacherId);
+
+        if (course.isPresent() && teacher.isPresent()) {
+
+            course.get().setName(courseName);
+            course.get().setDescription(courseDescription);
+            course.get().setTeacher(teacher.get());
+            course.get().setType(type);
+            courseRepository.save(course.get());
+        }
 
     }
+
     @Override
-    public void edit(String courseName, String courseDescription, Long teacherId, Long courseId) {
-        courseRepository.edit(courseName, courseDescription, teacherId, courseId);
+    public Optional<Course> save(Course course) {
+        return Optional.of(courseRepository.save(course));
     }
+
 
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Add Grade</h1>
+<form th:method="POST" action="/grades/add-grade">
+    <label>Grade</label>
+    <select name="grade">
+        <option th:each="grade: ${grades}" th:text="${grade}" th:value="${grade}"></option>
+    </select>
+    <br>
+    <label>Student</label>
+    <select name="studentUsername">
+        <option th:each="student: ${students}" th:text="${student.getUsername()}"
+                th:value="${student.getUsername()}"></option>
+    </select><br>
+    <label>Course</label>
+    <select name="courseName">
+        <option th:each="course: ${courses}" th:text="${course.getName()}" th:value="${course.getName()}"></option>
+    </select><br>
+    <label>Date</label><input type="datetime-local" name="dateTime"><br>
+    <button  type="submit">Submit</button>
+    <button>
+        <a href="/grades">Back</a>
+    </button>
+
+</form>
+</body>
+</html>

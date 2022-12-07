@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Grades Table</h1>
+<table>
+    <thead>
+    <tr>
+        <th scope="col">Grade</th>
+        <th scope="col">Student name</th>
+        <th scope="col">Student surname</th>
+        <th scope="col">Course name</th>
+        <th scope="col">Timestamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="grade: ${grades}">
+        <td th:text="(${grade.getGrade()})"></td>
+        <td th:text="${grade.getStudent().getName()}"></td>
+        <td th:text="${grade.getStudent().getSurname()}"></td>
+        <td th:text="${grade.getCourse().getName()}"></td>
+        <td th:text="${#temporals.format(grade.getTimestamp(), format)}"></td>
+
+    </tr>
+    </tbody>
+</table>
+<div>
+    <h3>Filter grades by interval</h3>
+    <form  action="/grades">
+    <label>From</label><input type="datetime-local" name="from"><br>
+    <label>To</label><input type="datetime-local" name="to"><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<div>
+<button>
+<a href="/grades/add-grade">Add Grade</a>
+</button>
+<button>
+    <a href="/listCourses">Back</a>
+</button>
+</div>
+</body>
+</html>

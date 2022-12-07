@@ -33,17 +33,17 @@ public class SelectedCourseFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String selectedCourseId = (String) request.getSession().getAttribute("courseId");
+        Course course = (Course) request.getSession().getAttribute("selectedCourse");
         String path = request.getServletPath();
         List<Long> validIdsOfCourses = courseService.validIdsOfCourses();
-        System.out.println(path);
+     //   System.out.println(path);
         int lastIndex = path.lastIndexOf("/");
         boolean isValid = false;
         if (Character.isDigit(path.charAt(lastIndex + 1))) {
             Long id = Long.valueOf(path.split("/")[path.split("/").length - 1]);
             isValid = !validIdsOfCourses.contains(id);
         }
-        if (selectedCourseId == null && courseMustBeSelectedMappings.contains(path) || isValid) {
+        if (course == null && courseMustBeSelectedMappings.contains(path) || isValid) {
             response.sendRedirect("/courses");
         } else {
             filterChain.doFilter(request, response);

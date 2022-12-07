@@ -36,6 +36,7 @@
             <th scope="col">Course description</th>
             <th scope="col">Course teacher</th>
             <th scope="col">Course id</th>
+            <th scope="col">Course type</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +45,7 @@
             <td th:text="${course.getDescription()}"></td>
             <td th:text="${course.getTeacher().getUsername()}"></td>
             <td th:text="${course.getCourseId()}"></td>
+            <td th:text="${course.getType()}"></td>
             <td>
                 <form class="delete" th:method="DELETE" th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
                     <button type="submit">Delete</button>
@@ -56,7 +58,12 @@
         </tbody>
     </table>
     <div>
+        <button>
         <a href="/courses/add-form">Add new course</a>
+        </button>
+        <button>
+            <a href="/grades">Grades</a>
+        </button>
     </div>
     <div th:if="${hasError}">
         <p th:text="'Error: ' + ${error}"></p>

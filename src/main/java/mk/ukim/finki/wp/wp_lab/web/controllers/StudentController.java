@@ -28,7 +28,7 @@ public class StudentController {
             model.addAttribute("hasError", true);
             model.addAttribute("error", error);
         }
-        List<Student> students =  studentService.listAll();
+        List<Student> students =  studentService.findAll();
         model.addAttribute("students", students);
         return "listStudents";
     }

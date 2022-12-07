@@ -11,10 +11,14 @@
 <section>
   <div th:text="${session.selectedCourse.name}"></div>
   <ul>
-    <li th:each="student: ${session.selectedCourse.students}">
+    <li th:each="entry: ${session.map}" th:with="student=${entry.getKey()}">
       <th:block th:text="${student.name}"></th:block>
       <th:block th:text="${student.surname}"></th:block>
       (<th:block th:text="${student.username}"></th:block>)
+      (<th:block th:text="${entry.getValue().getGrade()}"></th:block>)
+
+
+
     </li>
   </ul>
 

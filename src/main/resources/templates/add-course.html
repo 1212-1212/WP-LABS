@@ -10,6 +10,10 @@
   <input type="text" id="courseName" name="courseName"  th:value="(${course} != null ? ${course.getName()} : '')">
   <label for="courseDescription">Course description</label>
   <input type="text" id="courseDescription" name="courseDescription"  th:value="(${course} != null ? ${course.getDescription()} : '')">
+  <label>Course type</label>
+  <select name="type">
+    <option th:each="type: ${types}" th:value="${type}" th:text="${type}"></option>
+  </select>
   <label>Teacher</label>
   <select name="teacherId">
     <option th:if="${course} != null"
@@ -24,6 +28,7 @@
             th:text="${t.getUsername()}">
     </option>
   </select>
+
   <input style="visibility: hidden" th:if="${course} != null" name="courseId" th:value="${course.getCourseId()}">
 <div>
   <button type="submit" class="btn btn-primary">Submit</button>
