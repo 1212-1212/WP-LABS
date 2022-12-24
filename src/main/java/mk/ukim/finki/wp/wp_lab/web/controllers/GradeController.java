@@ -40,11 +40,9 @@ public class GradeController {
     @GetMapping
     private String getPage(Model model, @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
                            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
-        model.addAttribute("grades", gradeService.findAll());
         model.addAttribute("format", "dd-MM-yyyy HH:mm:ss");
-        if (Objects.nonNull(from) && Objects.nonNull(to)) {
-            model.addAttribute("grades", gradeService.findAllByTimestampBetween(from, to));
-        }
+        model.addAttribute("grades", gradeService.findAllByTimestampBetween(from, to));
+
         return "listGrades";
     }
 

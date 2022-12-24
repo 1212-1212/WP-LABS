@@ -18,6 +18,8 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
 
     void deleteAllByCourse(Course course);
 
+
+
     Optional<Grade> findGradeByGradeId(Long id);
 
 }

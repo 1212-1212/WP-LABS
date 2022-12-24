@@ -25,7 +25,7 @@ public class CreateStudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        resp.setContentType("text/html");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
@@ -38,6 +38,7 @@ public class CreateStudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         springTemplateEngine.process("createStudent.html", webContext, resp.getWriter());
 

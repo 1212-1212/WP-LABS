@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -79,6 +80,10 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public List<Grade> findAllByTimestampBetween(LocalDateTime from, LocalDateTime to) {
+        if(Objects.isNull(from))
+            from = LocalDateTime.now().minusYears(100);
+        if(Objects.isNull(to))
+            to = LocalDateTime.now().plusYears(100);
         return gradeRepository.findAllByTimestampBetween(from, to);
     }
 

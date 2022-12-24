@@ -20,7 +20,7 @@ public interface CourseService{
 
     void deleteCourseById(Long id);
 
-    Optional<Course> save(String courseName, String courseDescription, Long teacherId, Type type);
+   Course save(String courseName, String courseDescription, Long teacherId, Type type);
 
     Optional<Course> findCourseByName(String courseName);
 
@@ -29,7 +29,7 @@ public interface CourseService{
 
     List<Long> validIdsOfCourses();
 
-    Optional<Course> save(Course course);
+    Course save(Course course);
 
 
 

@@ -25,6 +25,7 @@ public class CourseListServlet  extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         webContext.setVariable("courses", courseService.findAll());
         springTemplateEngine.process("listCourses.html", webContext, resp.getWriter());
@@ -33,6 +34,7 @@ public class CourseListServlet  extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
         Optional<Course> course = courseService.findCourseById(Long.valueOf(req.getParameter("courseId")));
 
         course.ifPresent(val -> {
@@ -40,9 +42,7 @@ public class CourseListServlet  extends HttpServlet {
             req.getSession().setAttribute("courseId", course.get().getCourseId());
 
         });
-        courseService.findAll()
-                        .stream()
-                                .forEach(crs -> System.out.printf("%s, %s\n", crs.getName(), crs.getStudents().toString()));
+
         resp.sendRedirect("/listStudents");
     }
 }

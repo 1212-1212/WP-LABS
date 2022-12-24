@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table()
 public class Course implements Comparable<Course>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -31,8 +31,7 @@ public class ListStudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
+        resp.setContentType("text/html");
         String username = req.getParameter("username");
         req.getSession().setAttribute("username", username);
         Optional<Student> student = Optional.empty();
@@ -55,6 +54,7 @@ public class ListStudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         webContext.setVariable("students", studentService.findAll());
         springTemplateEngine.process("listStudents.html",webContext,resp.getWriter());

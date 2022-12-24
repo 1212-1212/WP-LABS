@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -36,11 +37,14 @@
     </form>
 </div>
 <div>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
 <button>
 <a href="/grades/add-grade">Add Grade</a>
+
 </button>
+    </th:block>
 <button>
-    <a href="/listCourses">Back</a>
+    <a href="/courses">Back</a>
 </button>
 </div>
 </body>

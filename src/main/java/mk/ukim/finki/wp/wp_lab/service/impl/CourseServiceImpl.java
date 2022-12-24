@@ -24,13 +24,13 @@ public class CourseServiceImpl implements CourseService {
 
     public final TeacherRepository teacherRepository;
 
-    private final GradeRepository gradeRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository, GradeRepository gradeRepository) {
+
+    public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
-        this.gradeRepository = gradeRepository;
+
     }
 
     @Override
@@ -69,11 +69,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
 
-    public Optional<Course> save(String courseName, String courseDescription, Long teacherId, Type type) {
+    public Course save(String courseName, String courseDescription, Long teacherId, Type type) {
         Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(IllegalArgumentException::new);
         Course course = new Course(courseName, courseDescription, type, teacher);
-        courseRepository.save(course);
-        return Optional.of(course);
+        return courseRepository.save(course);
+
     }
 
 
@@ -106,8 +106,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<Course> save(Course course) {
-        return Optional.of(courseRepository.save(course));
+    public Course save(Course course) {
+        return courseRepository.save(course);
     }
 
 

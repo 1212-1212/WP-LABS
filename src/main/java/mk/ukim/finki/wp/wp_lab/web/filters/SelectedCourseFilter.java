@@ -36,7 +36,7 @@ public class SelectedCourseFilter implements Filter {
         Course course = (Course) request.getSession().getAttribute("selectedCourse");
         String path = request.getServletPath();
         List<Long> validIdsOfCourses = courseService.validIdsOfCourses();
-     //   System.out.println(path);
+
         int lastIndex = path.lastIndexOf("/");
         boolean isValid = false;
         if (Character.isDigit(path.charAt(lastIndex + 1))) {
@@ -46,6 +46,7 @@ public class SelectedCourseFilter implements Filter {
         if (course == null && courseMustBeSelectedMappings.contains(path) || isValid) {
             response.sendRedirect("/courses");
         } else {
+
             filterChain.doFilter(request, response);
         }
 

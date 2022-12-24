@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Welcome and Choose a Course</title>
-    <link href="/listCourses.css">
+
+
 </head>
 <body>
 <header>
@@ -18,6 +20,7 @@
     </ul>
 </header>
 <main>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
     <h2>Choose course:</h2>
     <form th:action="@{'/listCourses'}" th:method="POST">
         <th:block th:each="course:${courses}">
@@ -29,6 +32,7 @@
 
         <input type="submit" value="Submit">
     </form>
+    </th:block>
     <table>
         <thead>
         <tr>
@@ -47,20 +51,24 @@
             <td th:text="${course.getCourseId()}"></td>
             <td th:text="${course.getType()}"></td>
             <td>
-                <form class="delete" th:method="DELETE" th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
-                    <button type="submit">Delete</button>
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <form th:method="DELETE"  th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}">
+                    <button class = "delete" type="submit">Delete</button>
                 </form>
-                <button>
+                <button class="edit">
                 <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}">Edit</a>
                 </button>
+                </th:block>
             </td>
         </tr>
         </tbody>
     </table>
     <div>
-        <button>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <button class="add">
         <a href="/courses/add-form">Add new course</a>
         </button>
+        </th:block>
         <button>
             <a href="/grades">Grades</a>
         </button>

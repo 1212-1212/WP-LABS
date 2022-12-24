@@ -35,10 +35,11 @@ public class Teacher {
 
     }
 
-//    public Teacher(String name, String surname, String username, LocalDate dateOfEmployment) {
-//        this.name = name;
-//        this.surname = surname;
-//        this.username = username;
-//        this.dateOfEmployment = dateOfEmployment;
-//    }
+    public Teacher(Long id, TeacherFullName teacherFullName, String username, LocalDate dateOfEmployment) {
+        this.id = id;
+        this.teacherFullName = teacherFullName;
+        this.username = username;
+        this.dateOfEmployment = dateOfEmployment;
+    }
+
 }

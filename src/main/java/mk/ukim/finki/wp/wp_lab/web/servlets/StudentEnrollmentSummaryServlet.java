@@ -43,6 +43,7 @@ public class StudentEnrollmentSummaryServlet extends HttpServlet {
     @Transactional
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
         WebContext webContext = new WebContext(req, resp, req.getServletContext());
         Course course = (Course) req.getSession().getAttribute("selectedCourse");
         Student student = (Student) req.getSession().getAttribute("selectedStudent");
