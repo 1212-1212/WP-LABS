@@ -2,7 +2,6 @@ package mk.ukim.finki.wp.wp_lab.service.impl;
 
 import mk.ukim.finki.wp.wp_lab.model.*;
 import mk.ukim.finki.wp.wp_lab.repository.CourseRepository;
-import mk.ukim.finki.wp.wp_lab.repository.GradeRepository;
 import mk.ukim.finki.wp.wp_lab.repository.StudentRepository;
 import mk.ukim.finki.wp.wp_lab.repository.TeacherRepository;
 import mk.ukim.finki.wp.wp_lab.service.CourseService;
@@ -10,19 +9,16 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
 
-    public final CourseRepository courseRepository;
-    public final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
 
-    public final TeacherRepository teacherRepository;
+    private final TeacherRepository teacherRepository;
 
 
 
@@ -32,6 +28,8 @@ public class CourseServiceImpl implements CourseService {
         this.teacherRepository = teacherRepository;
 
     }
+
+
 
     @Override
     public List<Student> listStudentsByCourse(Long courseId) {
