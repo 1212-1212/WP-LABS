@@ -24,11 +24,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.headers()
+                .frameOptions()
+                .disable()
+                .and()
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/courses", "/grades", "/listCourses", "/register").permitAll()
+                .antMatchers("/courses", "/grades", "/listCourses", "/register", "/h2").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -48,14 +51,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("gigo")
-//                .password(passwordEncoder.encode("123"))
-//                .authorities("ROLE_USER")
-//                .and()
-//                .withUser("admin")
-//                .password(passwordEncoder.encode("admin"))
-//                .authorities("ROLE_ADMIN");
+        auth.inMemoryAuthentication()
+                .withUser("gigo")
+                .password(passwordEncoder.encode("123"))
+                .authorities("ROLE_USER")
+                .and()
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin"))
+                .authorities("ROLE_ADMIN");
         auth.authenticationProvider(authenticationProvider);
     }
 }
